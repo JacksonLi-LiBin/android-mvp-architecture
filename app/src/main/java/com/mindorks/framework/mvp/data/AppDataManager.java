@@ -28,9 +28,11 @@ import com.mindorks.framework.mvp.data.db.model.Question;
 import com.mindorks.framework.mvp.data.db.model.User;
 import com.mindorks.framework.mvp.data.network.ApiHeader;
 import com.mindorks.framework.mvp.data.network.ApiHelper;
+import com.mindorks.framework.mvp.data.network.model.BlogResponse;
 import com.mindorks.framework.mvp.data.network.model.LoginRequest;
 import com.mindorks.framework.mvp.data.network.model.LoginResponse;
 import com.mindorks.framework.mvp.data.network.model.LogoutResponse;
+import com.mindorks.framework.mvp.data.network.model.OpenSourceResponse;
 import com.mindorks.framework.mvp.data.prefs.PreferencesHelper;
 import com.mindorks.framework.mvp.di.ApplicationContext;
 import com.mindorks.framework.mvp.utils.AppConstants;
@@ -44,6 +46,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
 /**
@@ -98,25 +101,25 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
-                                                                  request) {
+    public Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
+                                                              request) {
         return mApiHelper.doGoogleLoginApiCall(request);
     }
 
     @Override
-    public Observable<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
-                                                                    request) {
+    public Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
+                                                                request) {
         return mApiHelper.doFacebookLoginApiCall(request);
     }
 
     @Override
-    public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
-                                                                  request) {
+    public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
+                                                              request) {
         return mApiHelper.doServerLoginApiCall(request);
     }
 
     @Override
-    public Observable<LogoutResponse> doLogoutApiCall() {
+    public Single<LogoutResponse> doLogoutApiCall() {
         return mApiHelper.doLogoutApiCall();
     }
 
@@ -293,5 +296,15 @@ public class AppDataManager implements DataManager {
                         return Observable.just(false);
                     }
                 });
+    }
+
+    @Override
+    public Single<BlogResponse> getBlogApiCall() {
+        return mApiHelper.getBlogApiCall();
+    }
+
+    @Override
+    public Single<OpenSourceResponse> getOpenSourceApiCall() {
+        return mApiHelper.getOpenSourceApiCall();
     }
 }
